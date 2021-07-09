@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div id="albums">
+        <div id='album-template' class="album" style="display:none;">
+            <a class='link' href="https://www.youtube.com/watch?v=IWgAePYIEp8" target="_blank">
+            <img class="cover" src='https://upload.wikimedia.org/wikipedia/en/b/b3/TellMeHowYouReallyFeel.jpg'>
+            <p class="title">Courtney Barnett -Tell Me How You Really Feel</p>
+            </a>
+        </div>
+        <div class="album" onclick="pickRandom()">
+            <a href='#' target="_blank">
+            <div id='random'>RANDOM</div>
+            </a>
+        </div>
+    </div>
+</body>
+<style>
+
+
+    html{
+        background-color: rgba(0, 0, 0, 0.871);
+    }
+    #albums{
+        padding: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        grid-template-columns: auto-fit;
+    }
+    a{
+        display: flex;
+        width: 100%;
+        justify-items: center;
+        align-items: center;
+
+    }
+    #random{
+        position: absolute;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 30px;
+        text-shadow: 0px 0px 3px white;
+        width: 100%;
+        height: 100%;
+        top: 40%;
+        text-align: center;
+    }
+    .album{
+        display: flex;
+        position: relative;
+        height: 150px;
+        width: 150px;
+        background-color: rgba(0, 0, 0, 0.285);
+        margin: 5px;
+    }
+    @media (max-width: 600px) {
+  .album {
+        height: 150px;
+        width: 150px;
+  }
+  #albums{
+      padding: 0px;
+  }
+}
+    .album:hover{
+        transition: 0.25s ease-in-out;
+        transform: scale(1.1);
+    }
+
+    .cover{
+        width: 100%;
+        height: 100%;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    .title{
+        background-color: rgba(128, 128, 128, 0.449);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        text-decoration: none;
+        color:rgba(255, 255, 255, 0.728);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 700;
+        padding: 10px;
+        margin: 0px;
+        width: 87%;
+    }
+
+</style>
+<script>
+    let albumsArea = document.querySelector('#albums')
+    let randomPicker = document.querySelector('#random')
+    let album = {
+        title: 'Courney Barnett - Tell Me How You Really Feel',
+        url: 'https://www.youtube.com/watch?v=IWgAePYIEp8',
+        img: 'https://upload.wikimedia.org/wikipedia/en/b/b3/TellMeHowYouReallyFeel.jpg'
+    }
+    let albumArray = [
+        ['Courney Barnett - Tell Me How You Really Feel','https://www.youtube.com/watch?v=IWgAePYIEp8','https://upload.wikimedia.org/wikipedia/en/b/b3/TellMeHowYouReallyFeel.jpg'],
+        ["HUM-You'd Prefer an Astronaut",'https://www.youtube.com/watch?v=21ULI2Klniw','https://www.sputnikmusic.com/images/albums/6758.jpg'],
+        ["Weezer - Blue Album",'https://www.youtube.com/watch?v=0CNyd9zL44s','https://images-na.ssl-images-amazon.com/images/I/513fRQ6wVTL._SY580_.jpg'],
+        ['Smashing Pumpkins - Siamese Dream','https://www.youtube.com/watch?v=SFDsgdu-oMg&list=PLFiMJU5FstLGDZTcm6m-cpYIS1hstqbnp','https://4.allegroimg.com/s1024/0cde52/517ebb7c4ee2aa631c994fac90d4'],
+        ['Kings Of Leon - Because Of The Times','https://www.youtube.com/watch?v=zmmMEowDZtY&list=PLcnPdZHPO1-ZEZXTs-VfUE2v1l497zQYq','https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Because_of_the_Times_%28Kings_of_Leon_album_-_cover_art%29.jpg/220px-Because_of_the_Times_%28Kings_of_Leon_album_-_cover_art%29.jpg'],
+        ['Arcade Fire - Funeral','https://www.youtube.com/watch?v=32jp-7QlkqM','https://e.snmc.io/i/fullres/w/737baf506d66a55c3d6c3dd25e372c91/2330479'],
+        ['The Lumineers - self titled','https://www.youtube.com/watch?v=vB16TKPiff4&list=PLauzae8jRAOhYLhOVPVqByV7fvsU5Hqu_','https://static.wikia.nocookie.net/artists-i-follow/images/d/d9/Thelumineers.jpg'],
+        ['Pixies - Doolittle','https://www.youtube.com/watch?v=HvldypUz9w8&list=PLCx_l3FfC446YhZSrnYvxRLr3evK943La','https://upload.wikimedia.org/wikipedia/en/6/6b/Pixies-Doolittle.jpg'],
+        ['The Band - The Last Waltz','https://www.youtube.com/watch?v=DGDFvxalpjk&list=PLi307k6VzjI-d0kVSNgL0lUMLEuP9WQPA','https://images-na.ssl-images-amazon.com/images/I/81%2BsrHCfHFL._SL1425_.jpg'],
+        ['Alex Turner - Submarine','https://www.youtube.com/watch?v=d0yA0Q1l2jo','https://upload.wikimedia.org/wikipedia/en/5/5e/Alex_Turner_Submarine.jpg'],
+        ['RHCP - Stadium Arcadium','https://www.youtube.com/watch?v=8xip8lF-bS4','https://lastfm.freetls.fastly.net/i/u/770x0/a0c19fe4f8d84024931dd0f137c715e0.jpg'],
+        ['Led Zeppelin - IV','https://www.youtube.com/watch?v=j4axWj7io-U&t=2s','https://e.snmc.io/i/fullres/w/e177ff293e399450c77b81c21b487c0c/5707164'],
+        ['Mazzy Star - So Tonight That I Might See','https://www.youtube.com/watch?v=avv2IIdDnnk&list=PLfimnwaZdumiOR9jSjhnzC2Msft8OKa_Q','https://media.pitchfork.com/photos/5ee27dfddc55f46b46323027/1:1/w_600/So%20Tonight%20That%20I%20Might%20See_Mazzy%20Star.jpg'],
+        ['Lorde - Melodrama','https://www.youtube.com/watch?v=BBt-SNezeqg','https://upload.wikimedia.org/wikipedia/en/b/b2/Lorde_-_Melodrama.png'],
+        ['Kendrick Lamar - Good Kid, M.A.A.d City','https://www.youtube.com/watch?v=MVBwkTN5MqA','https://ecsmedia.pl/c/good-kid-m-a-a-d-city-deluxe-edition-w-iext40747666.jpg'],
+        ['Twin Peaks - Down In Heaven','https://www.youtube.com/watch?v=C7B21_ywtek&list=PLMzihFGvThPQR7AMj2KIzbAkyuKykatDQ','https://upload.wikimedia.org/wikipedia/en/4/42/Down_in_Heaven.jpg'],
+        ['Arcade Fire - The Suburbs','https://www.youtube.com/watch?v=bsr308fSeGQ','https://upload.wikimedia.org/wikipedia/en/8/81/Arcade_Fire_-_The_Suburbs.jpg'],
+        ['Pink Floyd - Wish You Were Here','https://www.youtube.com/watch?v=-YSjELJ-lSQ','https://miro.medium.com/max/1000/1*Aad3rcP6yKOj3LgWqx75gA.jpeg'],
+        ['Kings Of Leon - Only By The Night','https://www.youtube.com/watch?v=bPVt-HwXkeg','https://upload.wikimedia.org/wikipedia/en/c/c1/KingsOfLeon-OnlyByTheNightCover.png'],
+        ['Slowdive - Souvlaki','https://www.youtube.com/watch?v=5D2u3ASuelQ&list=PLMNMmvIC2uGbsOxYXy4wEF3jKuX7X4QME','https://upload.wikimedia.org/wikipedia/pt/1/1f/Souvlaki_%28Slowdive%29.jpg'],
+        ["Arctic Monkeys - Whatever People Say I Am, That's What I'm Not",'https://www.youtube.com/watch?v=Zw4WjFKZfI0&list=PLyWB0TxTMmTlY5w2W-SZ7UHnS3ksTZlkn','https://e.snmc.io/i/600/s/20b1157f2acd37d6ae3cebe980ea2598/7346711'],
+        ['Radiohead - The Bends','https://www.youtube.com/watch?v=g0az4OkM02Y&list=PLjYhpGCfoYYryeIl8OPYIPgB8IrmSP5x5','https://upload.wikimedia.org/wikipedia/en/5/55/Radioheadthebends.png'],
+        ['Mac Demarco - Salad Days','https://www.youtube.com/watch?v=0HQqXllXpfQ','https://m.media-amazon.com/images/I/71iFtVufj7L.jpg'],
+        ['Mac Demarco - 2','https://www.youtube.com/watch?v=pLyu1St_4ns','https://upload.wikimedia.org/wikipedia/en/1/15/Macdemarco2cover.png'],
+        ['Kendrick Lamar - To Pimp A Butterfly','https://www.youtube.com/watch?v=EsWtpmKKKWw','https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/3/11/1426099817173/f1efb3f4-9a6d-4f78-8ca8-594ab646d198-bestSizeAvailable.jpeg?width=300&quality=45&auto=format&fit=max&dpr=2&s=1107fc8e75e20f97bbb101d7b7a35ea2'],
+        ['The Lumineers - Cleopatra','https://www.youtube.com/watch?v=I9nUxmUroXg&list=PLe30UiAEzig6uDFu-QQyoraxWBffXP7Iq','https://alongsideyour78s.files.wordpress.com/2016/04/005267659_500.jpg?w=640'],
+        ['Dave Van Ronk - Folksinger','https://www.youtube.com/watch?v=wWs11I-QbEE&list=PLQ3tnR5_h9v7UkqZjySrFaGg5m-2NTBJX','https://img.discogs.com/FDW_UYIiUq9VNpOOtLEFa3kw_SA=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-2801106-1515852014-9290.jpeg.jpg'],
+        ['Lorde - Pure Heroine','https://www.youtube.com/watch?v=yZ6BR4rHYL4','https://images-na.ssl-images-amazon.com/images/I/815U3MK2jrL._SL1500_.jpg'],
+        ['LCD Soundsystem - Sound Of Silver','https://www.youtube.com/watch?v=4kPyjUMmCL4','https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/LCD_Soundsystem_-_Sound_of_Silver.jpg/220px-LCD_Soundsystem_-_Sound_of_Silver.jpg'],
+        ['Gregory Alan Isakov - The Weatherman','https://www.youtube.com/watch?v=9xPOEWvE-5o','https://img.discogs.com/RxAV8isYQHkNyOnG2Pm-IbfMP7A=/fit-in/600x600/filters:strip_icc():format(webp):mode_rgb():quality(90)/discogs-images/R-5678823-1407359627-6623.jpeg.jpg'],
+        ['Gregory and the Hawk - Moenie and Kitchi','https://www.youtube.com/watch?v=EMZOtHIL7QM','https://media.pitchfork.com/photos/59299fe85e6ef9596931fe27/1:1/w_600/f5f51e39.jpg'],
+        ['Neutral Milk Hotel - In The Aeroplane Over The Sea','https://www.youtube.com/watch?v=LULmbLlPvVk&list=PLT-5qio7h5jSzEOsTjOVGMgVi5nce5lAl','https://upload.wikimedia.org/wikipedia/en/8/83/In_the_aeroplane_over_the_sea_album_cover_copy.jpg'],
+        ['New Order - Power, Corruption And Lies','https://www.youtube.com/watch?v=64dq_8SW52k','https://upload.wikimedia.org/wikipedia/en/4/4f/New_Order_-_Power%2C_Corruption_%26_Lies.png'],
+        ['Sigur Ros - Ágaetis Byrjun','https://www.youtube.com/watch?v=56qkeYZn7Ig&list=PLiN-7mukU_RHjxGCCYFDiuqAHpS-O_T0n','https://wsm.serpent.pl/sklep/okladki/okl_okl_43178.jpg']
+    ];
+
+    albumArray.forEach((album,i)=>{
+        albumElement = document.querySelector('#album-template').cloneNode(true);
+        albumElement.querySelector('.title').innerText=album[0];
+        albumElement.querySelector('.link').href=album[1]
+        albumElement.querySelector('.cover').src=album[2]
+        albumElement.id=i;
+        albumElement.style['display']='flex';
+        albumsArea.appendChild(albumElement);
+    })
+
+    function pickRandom(){
+        randomPicker.closest('a').href=albumArray[Math.floor(Math.random()*albumArray.length+1)][1]
+    }
+
+    pickRandom();
+</script>
+</html>
